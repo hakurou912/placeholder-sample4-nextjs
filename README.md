@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## About this
 
-## Getting Started
+独学でNext.jsを学んでいます。  
+成果物として、Parallel RoutesとIntercepting Routesを使ってモーダルを起動する画面を作成しました。  
+ページの遷移なしで動的コンテンツをモーダル表示することが可能であることが分かりました。
 
-First, run the development server:
+使用したもの
+- [{JSON} Placeholder](https://jsonplaceholder.typicode.com/) - a free online REST API
+- [Bootstrap@5.3.0](https://getbootstrap.jp/)  - スタイル適用、モーダル機能（js）
+- Next.js 14.2.2
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+理解したこと
+- Intercepting Routes  
+本来ならページ遷移により表示する画面を、別のルートでインターセプト（妨害）して表示する仕組み。  
+モーダル機能のように、画面遷移を伴わずに別ページの内容を表示させることが可能になる。  
+インターセプトのルートには以下が有る。（今回は(.)を使用）  
+(.) … 同じレベル  
+(..) … 1つ上の階層  
+(..)(..) … 2つ上の階層  
+(...) … appディレクトリの階層  
+  
+- ファイルの命名規約（default）
+- Next.js独自のコンポーネント（next/link）  
+- Bootstrapのモーダルを利用した実装方法  
+　最初はappフォルダ直下のpage.jsで実装したNextLinkにdata-bs-toggle,data-bs-targetを指定してモーダル起動を試みたが、  
+　以下エラーにより表示できなかった。
+　Uncaught TypeError: Cannot read properties of undefined (reading 'backdrop')  
+　原因と対応方法を調査してみるも、有力な情報はなかったが、モーダル部分を実装しているpage.js内でクリックイベントを発火させると上手く表示出来た。  
+　今回はこの方法だが、ChatGPTから提案された「react-bootstrap」というのを取り入れてみても良かったかもしれない。（npmでのパッケージインストール必要）  
+- .envによる環境変数の管理（キーの先頭にNEXT_PUBLICを付ける。）
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+次回以降に学びたいこと、試したいこと
+- API作成（作成、参照、更新、削除）  
+- Next.js独自のfunction（NextResponse,NextRequest）  
+- Next.js独自のコンポーネント（next/image,next/server）  
+- 上記自作したAPIを使って画面表示、編集
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+参考
+- [Intercepting Routes（公式サイト）](https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes)
